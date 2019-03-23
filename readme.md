@@ -1,6 +1,6 @@
 # Model Presenter
 
-Use Presentable maps to separate your API's json results and your model's back-end.
+Use Presentable maps to separate your API's json structure and your model's back-end.
 
 ## Installation
 

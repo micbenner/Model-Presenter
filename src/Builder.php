@@ -25,7 +25,14 @@ class Builder
         return $this;
     }
 
-    public function when(bool $condition, string $key, $value)
+    public function addPresenter(Presenter $presenter): self
+    {
+        $this->attributes = array_merge($this->attributes, $presenter->toArray());
+
+        return $this;
+    }
+
+    public function when(bool $condition, string $key, $value): self
     {
         if ($value instanceof \Closure) {
             return $this->whenCall($condition, $key, $value);
@@ -38,7 +45,7 @@ class Builder
         return $this;
     }
 
-    public function whenCall(bool $condition, string $key, callable $value)
+    public function whenCall(bool $condition, string $key, callable $value): self
     {
         if ($condition) {
             $this->add($key, $value());
@@ -48,7 +55,7 @@ class Builder
     }
 
     // todo
-    public function whenRelationLoaded(Model $model, $relation, string $presenter = null)
+    public function whenRelationLoaded(Model $model, $relation, string $presenter = null): self
     {
         $key      = is_array($relation) ? key($relation) : $relation;
         $relation = is_array($relation) ? current($relation) : $relation;
