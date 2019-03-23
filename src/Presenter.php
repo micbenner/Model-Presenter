@@ -11,8 +11,12 @@ abstract class Presenter implements PresenterMap, JsonSerializable
     private $parser;
     private $flatten;
 
-    public function __construct(Parser $parser, $flatten = false)
+    public function __construct($parser, $flatten = false)
     {
+        if (!$parser instanceof Parser) {
+            $parser = ParserFactory::build($parser);
+        }
+
         $this->parser  = $parser;
         $this->flatten = $flatten;
     }
