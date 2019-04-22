@@ -42,7 +42,7 @@ class BuilderTest extends TestCase
         $presenter->method('toArray')->willReturn([
                                                       'child' => [
                                                           'kid' => true,
-                                                      ]
+                                                      ],
                                                   ]);
 
         $b = $this->b()

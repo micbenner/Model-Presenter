@@ -3,8 +3,10 @@
 namespace Tests;
 
 use Micbenner\ModelPresenter\Builder;
+use Micbenner\ModelPresenter\Paginator;
 use Micbenner\ModelPresenter\Parsers\ArrayParser;
 use Micbenner\ModelPresenter\Parsers\ModelParser;
+use Micbenner\ModelPresenter\Parsers\PaginatorParser;
 use Micbenner\ModelPresenter\Parsers\Parser;
 use Micbenner\ModelPresenter\Presenter;
 use PHPUnit\Framework\TestCase;
@@ -31,10 +33,39 @@ class PresenterTest extends TestCase
             [
                 'and' => 'so',
                 'is'  => 'this',
-            ]
+            ],
         ];
 
         $this->assertEquals(['tests' => $models], $this->echoPresenterMock(new ArrayParser($models))->toArray());
+    }
+
+    public function testPresentsPaginator()
+    {
+        $models = [
+            [
+                'this' => 'is',
+                'a'    => 'test',
+            ],
+            [
+                'and' => 'so',
+                'is'  => 'this',
+            ],
+        ];
+
+        $paginator = $this->getMockBuilder(Paginator::class)
+                          ->setMethods(['getCurrentPage', 'getItems'])
+                          ->getMock();
+        $paginator->method('getCurrentPage')->willReturn(1);
+        $paginator->method('getItems')->willReturn($models);
+
+        $expected = [
+            'tests'     => $models,
+            'paginator' => [
+                'currentPage' => 1,
+            ],
+        ];
+
+        $this->assertEquals($expected, $this->echoPresenterMock(new PaginatorParser($paginator))->toArray());
     }
 
     private function echoPresenterMock(Parser $parser): Presenter

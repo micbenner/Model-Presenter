@@ -1,37 +1,52 @@
 <?php
 
-namespace App\Presentation\Parsers;
+namespace Micbenner\ModelPresenter\Parsers;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Contracts\Pagination\Paginator;
+use Micbenner\ModelPresenter\Paginator;
 
 class PaginatorParser implements Parser
 {
     private $paginator;
     private $arrayParser;
 
-    /**
-     * PaginatorParser constructor.
-     *
-     * @param \Illuminate\Contracts\Pagination\Paginator $paginator
-     */
     public function __construct(Paginator $paginator)
     {
         $this->paginator   = $paginator;
-        $this->arrayParser = new ArrayParser($paginator);
+        $this->arrayParser = new ArrayParser($paginator->getItems());
     }
 
-    public function dataType()
+    public function isMany(): bool
     {
-        $this->arrayParser->dataType();
+        return true;
     }
 
+    /**
+     * Parse or iterate the Presenter's build function
+     *
+     * @param callable $build
+     * @return mixed
+     */
     public function parse(callable $build)
     {
         return $this->arrayParser->parse($build);
     }
 
-    // todo
+    /**
+     * An array of items to always include with the final presented array
+     *
+     * @return array
+     */
+    public function with(): array
+    {
+        $paginator = [
+            'currentPage' => $this->paginator->getCurrentPage(),
+        ];
+
+        return compact('paginator');
+    }
+
+    /*
+    // old method, for reference
     public function with(): array
     {
         $paginator = [
@@ -53,5 +68,5 @@ class PaginatorParser implements Parser
         }
 
         return array_merge($this->arrayParser->with(), compact('paginator'));
-    }
+    }*/
 }

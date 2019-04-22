@@ -4,7 +4,6 @@ namespace Micbenner\ModelPresenter;
 
 use Micbenner\ModelPresenter\Parsers\ArrayParser;
 use Micbenner\ModelPresenter\Parsers\ModelParser;
-use Micbenner\ModelPresenter\Parsers\Paginator;
 use Micbenner\ModelPresenter\Parsers\PaginatorParser;
 use Micbenner\ModelPresenter\Parsers\Parser;
 use Traversable;
