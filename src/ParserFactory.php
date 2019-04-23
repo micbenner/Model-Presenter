@@ -3,6 +3,7 @@
 namespace Micbenner\ModelPresenter;
 
 use Micbenner\ModelPresenter\Parsers\ArrayParser;
+use Micbenner\ModelPresenter\Parsers\CollectionParser;
 use Micbenner\ModelPresenter\Parsers\ModelParser;
 use Micbenner\ModelPresenter\Parsers\PaginatorParser;
 use Micbenner\ModelPresenter\Parsers\Parser;
@@ -21,8 +22,8 @@ class ParserFactory
             return new ModelParser($data);
         }
 
-        if ($data instanceof Paginator) {
-            return new PaginatorParser($data);
+        if ($data instanceof PresentableCollection) {
+            return new CollectionParser($data);
         }
 
         if ($data instanceof Traversable || is_array($data)) {

@@ -2,15 +2,8 @@
 
 namespace Micbenner\ModelPresenter;
 
-interface Paginator
+interface PresentableCollection
 {
-    /**
-     * Get the current page of the paginator
-     *
-     * @return int
-     */
-    public function getCurrentPage(): int;
-
     /**
      * Get the items to iterate over
      *

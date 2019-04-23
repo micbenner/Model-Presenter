@@ -2,6 +2,8 @@
 
 namespace Micbenner\ModelPresenter\Parsers;
 
+use Micbenner\ModelPresenter\PresentableCollectionWith;
+
 class ArrayParser implements Parser
 {
     private $items;
